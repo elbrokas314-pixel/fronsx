@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Menu, X, Package } from 'lucide-react';
+import LoginView from './LoginView';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
 
   return (
-    <nav className="bg-white shadow-md fixed w-full z-50 top-0">
+    <>
+      <nav className="bg-white shadow-md fixed w-full z-50 top-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -32,7 +35,10 @@ const Navbar = () => {
             <button className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
               Explorar Productos
             </button>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
+            <button 
+              onClick={() => setShowLogin(true)}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            >
               Ingresar / Registrarse
             </button>
           </div>
@@ -77,7 +83,13 @@ const Navbar = () => {
                 <button className="w-full px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
                   Explorar Productos
                 </button>
-                <button className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                <button 
+                  onClick={() => {
+                    setShowLogin(true);
+                    setIsOpen(false);
+                  }}
+                  className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
                   Ingresar / Registrarse
                 </button>
               </div>
@@ -85,7 +97,10 @@ const Navbar = () => {
           </div>
         )}
       </div>
-    </nav>
+      </nav>
+      
+      <LoginView isOpen={showLogin} onClose={() => setShowLogin(false)} />
+    </>
   );
 };
 
