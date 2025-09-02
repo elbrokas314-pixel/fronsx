@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { X, ArrowLeft, Phone, Mail, Lock, User, Check, AlertCircle } from 'lucide-react';
-
 interface LoginViewProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
 interface FormData {
   phone: string;
   email: string;
@@ -13,17 +11,14 @@ interface FormData {
   fullName: string;
   role: 'comprador' | 'vendedor';
 }
-
 interface ValidationErrors {
   phone?: string;
   email?: string;
   password?: string;
   fullName?: string;
 }
-
 type LoginView = 'phone' | 'otp' | 'recovery';
 type Tab = 'login' | 'register';
-
 const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
   const [activeTab, setActiveTab] = useState<Tab>('login');
   const [currentView, setCurrentView] = useState<LoginView>('phone');
@@ -39,7 +34,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
   const [resendCooldown, setResendCooldown] = useState(0);
   const [recoveryEmail, setRecoveryEmail] = useState('');
   const [recoverySubmitted, setRecoverySubmitted] = useState(false);
-
   // Cooldown timer for resend code
   useEffect(() => {
     if (resendCooldown > 0) {
@@ -47,7 +41,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
       return () => clearTimeout(timer);
     }
   }, [resendCooldown]);
-
   // Reset states when modal closes
   useEffect(() => {
     if (!isOpen) {
@@ -67,26 +60,21 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
       setRecoverySubmitted(false);
     }
   }, [isOpen]);
-
   // Validation functions
   const validatePhone = (phone: string): boolean => {
     const phoneRegex = /^\d{10}$/;
     return phoneRegex.test(phone);
   };
-
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-
   const validatePassword = (password: string): boolean => {
     return password.length >= 6;
   };
-
   const validateFullName = (name: string): boolean => {
     return name.trim().length >= 4;
   };
-
   // Real-time validation
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -123,13 +111,11 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
       setValidationErrors(prev => ({ ...prev, [field]: error }));
     }
   };
-
   // Handle phone input (only numbers)
   const handlePhoneInput = (value: string) => {
     const numbersOnly = value.replace(/\D/g, '').slice(0, 10);
     handleInputChange('phone', numbersOnly);
   };
-
   // Handle form submissions
   const handleSendCode = () => {
     if (validatePhone(formData.phone)) {
@@ -137,7 +123,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
       setResendCooldown(60);
     }
   };
-
   const handleOtpSubmit = () => {
     if (otpCode.length === 6) {
       // Simulate login success
@@ -145,7 +130,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
       onClose();
     }
   };
-
   const handleRegister = () => {
     const errors: ValidationErrors = {};
     
@@ -161,22 +145,18 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
     if (!validatePassword(formData.password)) {
       errors.password = 'La contraseña debe tener mínimo 6 caracteres';
     }
-
     setValidationErrors(errors);
-
     if (Object.keys(errors).length === 0) {
       // Simulate registration success
       console.log('Registration successful', formData);
       onClose();
     }
   };
-
   const handleRecoverySubmit = () => {
     if (validateEmail(recoveryEmail)) {
       setRecoverySubmitted(true);
     }
   };
-
   const handleResendCode = () => {
     if (resendCooldown === 0) {
       setResendCooldown(60);
@@ -184,9 +164,7 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
       console.log('Code resent');
     }
   };
-
   if (!isOpen) return null;
-
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
@@ -202,7 +180,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
             <X className="h-6 w-6 text-gray-500" />
           </button>
         </div>
-
         <div className="p-6">
           {/* Recovery View */}
           {currentView === 'recovery' && (
@@ -214,7 +191,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                 <ArrowLeft className="h-4 w-4" />
                 <span>Volver</span>
               </button>
-
               {!recoverySubmitted ? (
                 <>
                   <div>
@@ -225,7 +201,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                       Ingresa tu email y te enviaremos instrucciones para recuperar tu cuenta.
                     </p>
                   </div>
-
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Email
@@ -241,7 +216,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                       />
                     </div>
                   </div>
-
                   <button
                     onClick={handleRecoverySubmit}
                     disabled={!validateEmail(recoveryEmail)}
@@ -265,7 +239,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
               )}
             </div>
           )}
-
           {/* Login/Register Tabs */}
           {currentView !== 'recovery' && (
             <>
@@ -291,7 +264,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                   Registrarse
                 </button>
               </div>
-
               {/* Login Tab Content */}
               {activeTab === 'login' && (
                 <>
@@ -306,7 +278,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                           Te enviaremos un código de verificación por WhatsApp
                         </p>
                       </div>
-
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                           Número de teléfono
@@ -331,7 +302,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                           </p>
                         )}
                       </div>
-
                       <button
                         onClick={handleSendCode}
                         disabled={!validatePhone(formData.phone)}
@@ -339,7 +309,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                       >
                         Enviar Código
                       </button>
-
                       <div className="text-center">
                         <button
                           onClick={() => setCurrentView('recovery')}
@@ -350,7 +319,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                       </div>
                     </div>
                   )}
-
                   {/* OTP Verification View */}
                   {currentView === 'otp' && (
                     <div className="space-y-6">
@@ -361,7 +329,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                         <ArrowLeft className="h-4 w-4" />
                         <span>Volver</span>
                       </button>
-
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">
                           Verificar código
@@ -373,7 +340,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                           </span>
                         </p>
                       </div>
-
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                           Código de verificación
@@ -387,7 +353,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                           maxLength={6}
                         />
                       </div>
-
                       <button
                         onClick={handleOtpSubmit}
                         disabled={otpCode.length !== 6}
@@ -395,7 +360,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                       >
                         Ingresar
                       </button>
-
                       <div className="text-center">
                         <button
                           onClick={handleResendCode}
@@ -412,7 +376,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                   )}
                 </>
               )}
-
               {/* Register Tab Content */}
               {activeTab === 'register' && (
                 <div className="space-y-6">
@@ -424,7 +387,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                       Únete a la comunidad de delivery local
                     </p>
                   </div>
-
                   {/* Full Name */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -449,7 +411,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                       </p>
                     )}
                   </div>
-
                   {/* Phone */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -475,7 +436,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                       </p>
                     )}
                   </div>
-
                   {/* Email */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -500,7 +460,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                       </p>
                     )}
                   </div>
-
                   {/* Password */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -525,7 +484,6 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                       </p>
                     )}
                   </div>
-
                   {/* Role Selection */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -568,14 +526,12 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
                       </label>
                     </div>
                   </div>
-
                   <button
                     onClick={handleRegister}
                     className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-semibold"
                   >
                     Crear Cuenta
                   </button>
-
                   <p className="text-xs text-gray-500 text-center">
                     Al registrarte, aceptas nuestros{' '}
                     <a href="#" className="text-blue-600 hover:text-blue-700">
@@ -595,5 +551,4 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
     </div>
   );
 };
-
 export default LoginView;
