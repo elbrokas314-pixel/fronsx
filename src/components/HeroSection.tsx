@@ -1,7 +1,11 @@
 import React from 'react';
 import { ArrowRight, Play, Package } from 'lucide-react';
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  onOpenLogin: () => void;
+}
+
+const HeroSection: React.FC<HeroSectionProps> = ({ onOpenLogin }) => {
   return (
     <section className="pt-16 bg-gradient-to-br from-blue-50 via-white to-green-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
@@ -20,7 +24,10 @@ const HeroSection = () => {
             
             {/* CTA Buttons */}
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <button className="group px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2">
+              <button
+                onClick={onOpenLogin}
+                className="group px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
+              >
                 <span className="font-semibold">Registrarse Gratis</span>
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
               </button>
