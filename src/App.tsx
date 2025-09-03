@@ -27,7 +27,7 @@ function App() {
       <ForWhoSection />
       <BenefitsSection />
       <TestimonialsSection />
-      <CtaSection />
+      <CtaSection onOpenLogin={handleOpenLogin} />
       <Footer />
 
       {/* El login modal se controla desde aquí */}

@@ -1,7 +1,10 @@
-import React from 'react';
 import { ArrowRight, Smartphone, Clock, MapPin } from 'lucide-react';
 
-const CtaSection = () => {
+interface CtaSectionProps {
+  onOpenLogin: () => void;
+}
+
+const CtaSection: React.FC<CtaSectionProps> = ({ onOpenLogin }) => {
   return (
     <section className="py-16 lg:py-24 bg-gradient-to-br from-blue-600 via-blue-700 to-green-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,7 +49,10 @@ const CtaSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="group px-10 py-5 bg-white text-blue-600 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-3 text-lg font-semibold">
+            <button
+              onClick={onOpenLogin}
+              className="group px-10 py-5 bg-white text-blue-600 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-3 text-lg font-semibold"
+            >
               <span>Registrarse Ahora</span>
               <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform duration-200" />
             </button>
