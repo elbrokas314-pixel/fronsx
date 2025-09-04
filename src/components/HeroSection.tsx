@@ -3,9 +3,10 @@ import { ArrowRight, Play, Package } from 'lucide-react';
 
 interface HeroSectionProps {
   onOpenLogin: () => void;
+  onShowProducts: () => void;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ onOpenLogin }) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ onOpenLogin, onShowProducts }) => {
   return (
     <section className="pt-16 bg-gradient-to-br from-blue-50 via-white to-green-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
@@ -31,7 +32,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onOpenLogin }) => {
                 <span className="font-semibold">Registrarse Gratis</span>
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
               </button>
-              <button className="group px-8 py-4 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all duration-200 flex items-center justify-center space-x-2">
+              <button 
+                onClick={onShowProducts}
+                className="group px-8 py-4 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all duration-200 flex items-center justify-center space-x-2"
+              >
                 <Play className="h-5 w-5" />
                 <span className="font-semibold">Ver Productos</span>
               </button>

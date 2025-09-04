@@ -3,9 +3,12 @@ import { Menu, X, Package } from 'lucide-react';
 
 interface NavbarProps {
   onOpenLogin: () => void;
+  onShowProducts: () => void;
+  onShowHome: () => void;
+  currentView: 'home' | 'products';
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
+const Navbar: React.FC<NavbarProps> = ({ onOpenLogin, onShowProducts, onShowHome, currentView }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -14,27 +17,48 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <div className="flex items-center space-x-2">
+            <button 
+              onClick={onShowHome}
+              className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-200"
+            >
               <Package className="h-8 w-8 text-blue-600" />
               <span className="text-xl font-bold text-gray-900">DeliveryApp</span>
-            </div>
+            </button>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#como-funciona" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">
-                ¿Cómo funciona?
-              </a>
-              <a href="#beneficios" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">
-                Beneficios
-              </a>
-              <a href="#testimonios" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">
-                Testimonios
-              </a>
+              {currentView === 'home' ? (
+                <>
+                  <a href="#como-funciona" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">
+                    ¿Cómo funciona?
+                  </a>
+                  <a href="#beneficios" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">
+                    Beneficios
+                  </a>
+                  <a href="#testimonios" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">
+                    Testimonios
+                  </a>
+                </>
+              ) : (
+                <button
+                  onClick={onShowHome}
+                  className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                >
+                  ← Volver al inicio
+                </button>
+              )}
             </div>
 
             {/* Desktop Action Buttons */}
             <div className="hidden md:flex items-center space-x-4">
-              <button className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+              <button 
+                onClick={onShowProducts}
+                className={`px-4 py-2 border rounded-lg transition-colors duration-200 ${
+                  currentView === 'products'
+                    ? 'bg-blue-50 text-blue-600 border-blue-300'
+                    : 'text-gray-600 border-gray-300 hover:bg-gray-50'
+                }`}
+              >
                 Explorar Productos
               </button>
               <button 
@@ -60,29 +84,53 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
           {isOpen && (
             <div className="md:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
-                <a
-                  href="#como-funciona"
-                  className="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
-                  onClick={() => setIsOpen(false)}
-                >
-                  ¿Cómo funciona?
-                </a>
-                <a
-                  href="#beneficios"
-                  className="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Beneficios
-                </a>
-                <a
-                  href="#testimonios"
-                  className="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Testimonios
-                </a>
+                {currentView === 'home' ? (
+                  <>
+                    <a
+                      href="#como-funciona"
+                      className="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      ¿Cómo funciona?
+                    </a>
+                    <a
+                      href="#beneficios"
+                      className="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Beneficios
+                    </a>
+                    <a
+                      href="#testimonios"
+                      className="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Testimonios
+                    </a>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => {
+                      onShowHome();
+                      setIsOpen(false);
+                    }}
+                    className="block w-full text-left px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                  >
+                    ← Volver al inicio
+                  </button>
+                )}
                 <div className="pt-4 space-y-2">
-                  <button className="w-full px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                  <button 
+                    onClick={() => {
+                      onShowProducts();
+                      setIsOpen(false);
+                    }}
+                    className={`w-full px-4 py-2 border rounded-lg transition-colors duration-200 ${
+                      currentView === 'products'
+                        ? 'bg-blue-50 text-blue-600 border-blue-300'
+                        : 'text-gray-600 border-gray-300 hover:bg-gray-50'
+                    }`}
+                  >
                     Explorar Productos
                   </button>
                   <button 
