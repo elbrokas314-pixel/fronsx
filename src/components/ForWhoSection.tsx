@@ -117,7 +117,7 @@ const ForWhoSection = () => {
 
                 <div className="mt-8">
                   <button className={`w-full py-3 px-6 ${colorClasses.text} border-2 ${colorClasses.border} rounded-lg font-semibold hover:bg-white transition-colors duration-200`}>
-                    Comenzar como {role.title.slice(0, -1)}
+                    Comenzar como {role.title.slice(0)}
                   </button>
                 </div>
               </div>
