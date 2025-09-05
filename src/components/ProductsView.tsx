@@ -3,7 +3,11 @@ import { Search, Filter, Loader2, Package, AlertCircle } from 'lucide-react';
 import ProductCard from './ProductCard';
 import { Product, Category } from '../types/Product';
 
-const ProductsView = () => {
+interface ProductsViewProps {
+  onProductClick: (productId: string) => void;
+}
+
+const ProductsView: React.FC<ProductsViewProps> = ({ onProductClick }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -178,12 +182,6 @@ const ProductsView = () => {
     setFilteredProducts(filtered);
   }, [products, searchTerm, selectedCategory]);
 
-  const handleProductClick = (product: Product) => {
-    console.log('Navigating to product:', product.id);
-    // Here you would navigate to product detail page
-    // For now, just log the action
-  };
-
   const handleCategoryFilter = (categoryId: string) => {
     setSelectedCategory(categoryId);
   };
@@ -345,7 +343,7 @@ const ProductsView = () => {
                   <ProductCard
                     key={product.id}
                     product={product}
-                    onClick={handleProductClick}
+                    onClick={(product) => onProductClick(product.id)}
                   />
                 ))}
               </div>

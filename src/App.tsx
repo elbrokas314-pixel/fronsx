@@ -8,17 +8,32 @@ import CtaSection from './components/CtaSection';
 import Footer from './components/Footer';
 import LoginView from './components/LoginView';
 import ProductsView from './components/ProductsView';
+import ProductDetailView from './components/ProductDetailView';
+import CartView from './components/CartView';
+import { useCartStore } from './store/cartStore';
 
 function App() {
   // Estado centralizado para el modal de login
   const [showLogin, setShowLogin] = useState(false);
-  const [currentView, setCurrentView] = useState<'home' | 'products'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'products' | 'product-detail' | 'cart'>('home');
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
+  
+  const totalItems = useCartStore((state) => state.getTotalItems());
 
   // Función para abrir el login, se comparte por prop
   const handleOpenLogin = () => setShowLogin(true);
   const handleCloseLogin = () => setShowLogin(false);
   const handleShowProducts = () => setCurrentView('products');
   const handleShowHome = () => setCurrentView('home');
+  const handleShowProductDetail = (productId: string) => {
+    setSelectedProductId(productId);
+    setCurrentView('product-detail');
+  };
+  const handleShowCart = () => setCurrentView('cart');
+  const handleCheckout = () => {
+    // Here you would implement checkout logic
+    console.log('Proceeding to checkout...');
+  };
 
   return (
     <div className="min-h-screen">
@@ -27,7 +42,9 @@ function App() {
         onOpenLogin={handleOpenLogin} 
         onShowProducts={handleShowProducts}
         onShowHome={handleShowHome}
+        onShowCart={handleShowCart}
         currentView={currentView}
+        cartItemsCount={totalItems}
       />
       
       {currentView === 'home' ? (
@@ -42,7 +59,23 @@ function App() {
           <Footer />
         </>
       ) : (
-        <ProductsView />
+        <>
+          {currentView === 'products' && (
+            <ProductsView onProductClick={handleShowProductDetail} />
+          )}
+          {currentView === 'product-detail' && selectedProductId && (
+            <ProductDetailView 
+              productId={selectedProductId} 
+              onBack={handleShowProducts}
+            />
+          )}
+          {currentView === 'cart' && (
+            <CartView 
+              onBack={handleShowProducts}
+              onCheckout={handleCheckout}
+            />
+          )}
+        </>
       )}
 
       {/* El login modal se controla desde aquí */}

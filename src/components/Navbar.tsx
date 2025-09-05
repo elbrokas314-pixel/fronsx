@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
-import { Menu, X, Package } from 'lucide-react';
+import { Menu, X, Package, ShoppingCart } from 'lucide-react';
 
 interface NavbarProps {
   onOpenLogin: () => void;
   onShowProducts: () => void;
   onShowHome: () => void;
-  currentView: 'home' | 'products';
+  onShowCart: () => void;
+  currentView: 'home' | 'products' | 'product-detail' | 'cart';
+  cartItemsCount: number;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onOpenLogin, onShowProducts, onShowHome, currentView }) => {
+const Navbar: React.FC<NavbarProps> = ({ 
+  onOpenLogin, 
+  onShowProducts, 
+  onShowHome, 
+  onShowCart,
+  currentView,
+  cartItemsCount 
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -51,6 +60,22 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenLogin, onShowProducts, onShowHome
 
             {/* Desktop Action Buttons */}
             <div className="hidden md:flex items-center space-x-4">
+              <button 
+                onClick={onShowCart}
+                className={`relative px-4 py-2 border rounded-lg transition-colors duration-200 flex items-center space-x-2 ${
+                  currentView === 'cart'
+                    ? 'bg-blue-50 text-blue-600 border-blue-300'
+                    : 'text-gray-600 border-gray-300 hover:bg-gray-50'
+                }`}
+              >
+                <ShoppingCart className="h-4 w-4" />
+                <span>Carrito</span>
+                {cartItemsCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {cartItemsCount > 99 ? '99+' : cartItemsCount}
+                  </span>
+                )}
+              </button>
               <button 
                 onClick={onShowProducts}
                 className={`px-4 py-2 border rounded-lg transition-colors duration-200 ${
@@ -120,6 +145,25 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenLogin, onShowProducts, onShowHome
                   </button>
                 )}
                 <div className="pt-4 space-y-2">
+                  <button 
+                    onClick={() => {
+                      onShowCart();
+                      setIsOpen(false);
+                    }}
+                    className={`relative w-full px-4 py-2 border rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 ${
+                      currentView === 'cart'
+                        ? 'bg-blue-50 text-blue-600 border-blue-300'
+                        : 'text-gray-600 border-gray-300 hover:bg-gray-50'
+                    }`}
+                  >
+                    <ShoppingCart className="h-4 w-4" />
+                    <span>Carrito</span>
+                    {cartItemsCount > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                        {cartItemsCount > 99 ? '99+' : cartItemsCount}
+                      </span>
+                    )}
+                  </button>
                   <button 
                     onClick={() => {
                       onShowProducts();
