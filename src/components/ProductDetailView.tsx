@@ -58,7 +58,74 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ productId, onBack
       },
       calificacion: 4.8,
       descripcion: 'Trio de empanadas crujientes rellenas de pollo desmechado sazonado con especias tradicionales. Masa dorada y crujiente que encierra un relleno jugoso y lleno de sabor. Acompañadas con ají casero. Perfectas para compartir o disfrutar como comida completa.'
+    },
+    '4':{
+      id: '4',
+      nombre: 'Café Colombiano Premium',
+      precio: 12000,
+      url_imagen: 'https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=400',
+      categoria: 'Bebidas',
+      tienda: {
+        nombre: 'Café del Puerto',
+        calificacion: 4.7
+      },
+      calificacion: 4.6,
+      descripcion: 'Café 100% colombiano, tostado artesanalmente'
+    },
+    '5':{
+      id: '5',
+      nombre: 'Patacón con Hogao',
+      precio: 6500,
+      url_imagen: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400',
+      categoria: 'Comida',
+      tienda: {
+        nombre: 'Patacones El Malecón',
+        calificacion: 4.5
+      },
+      calificacion: 4.4,
+      descripcion: 'Patacón crujiente con hogao tradicional'
+    },
+    '6':{
+      id: '6',
+      nombre: 'Raspao de Tamarindo',
+      precio: 2500,
+      url_imagen: 'https://images.pexels.com/photos/1092730/pexels-photo-1092730.jpeg?auto=compress&cs=tinysrgb&w=400',
+      categoria: 'Postres',
+      tienda: {
+        nombre: 'Raspao Don Pedro',
+        calificacion: 4.8
+      },
+      calificacion: 4.9,
+      descripcion: 'Raspao artesanal con jarabe de tamarindo'
+    },
+    '7':{
+      id: '7',
+      nombre: 'Sancocho de Gallina',
+      precio: 15000,
+      url_imagen: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400',
+      categoria: 'Comida',
+      tienda: {
+        nombre: 'Sancocho Abuela Rosa',
+        calificacion: 4.9
+      },
+      calificacion: 4.8,
+      descripcion: 'Sancocho tradicional con gallina criolla'
+    },
+    '8':{
+      id: '8',
+      nombre: 'Limonada de Coco',
+      precio: 4000,
+      url_imagen: 'https://images.pexels.com/photos/96974/pexels-photo-96974.jpeg?auto=compress&cs=tinysrgb&w=400',
+      categoria: 'Bebidas',
+      tienda: {
+        nombre: 'Cocteles Tropicales',
+        calificacion: 4.6
+      },
+      calificacion: 4.5,
+      descripcion: 'Limonada refrescante con coco rallado'
     }
+    
+    
   };
 
   // Simulate API call
