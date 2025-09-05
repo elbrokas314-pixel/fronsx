@@ -1,6 +1,17 @@
 import React from 'react';
 import { ShoppingCart, Store, Bike } from 'lucide-react';
 
+
+const singularizeRole = (title: string) => {
+  if (title === 'Compradores' || title === 'Vendedores') {
+    return title.slice(0, -2).toLowerCase(); // "comprador", "vendedor"
+  }
+  if (title === 'Mensajeros') {
+    return title.slice(0, -1).toLowerCase(); // "mensajero"
+  }
+  return title.toLowerCase();
+};
+
 const ForWhoSection = () => {
   const roles = [
     {
@@ -90,7 +101,7 @@ const ForWhoSection = () => {
           {roles.map((role, index) => {
             const colorClasses = getColorClasses(role.color);
             const IconComponent = role.icon;
-            
+
             return (
               <div
                 key={index}
@@ -116,8 +127,10 @@ const ForWhoSection = () => {
                 </ul>
 
                 <div className="mt-8">
-                  <button className={`w-full py-3 px-6 ${colorClasses.text} border-2 ${colorClasses.border} rounded-lg font-semibold hover:bg-white transition-colors duration-200`}>
-                    Comenzar como {role.title.slice(0)}
+                  <button
+                    className={`w-full py-3 px-6 ${colorClasses.text} border-2 ${colorClasses.border} rounded-lg font-semibold hover:bg-white transition-colors duration-200`}
+                  >
+                    Comenzar como {singularizeRole(role.title)}
                   </button>
                 </div>
               </div>
