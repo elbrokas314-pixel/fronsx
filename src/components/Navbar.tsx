@@ -38,8 +38,8 @@ const Navbar: React.FC<NavbarProps> = ({
             <div className="hidden md:flex items-center space-x-8">
               {currentView === 'home' ? (
                 <>
-                  <a href="#como-funciona" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">
-                    ¿Cómo funciona?
+                  <a href="#para-quien" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">
+                    ¿Para quíen es?
                   </a>
                   <a href="#beneficios" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">
                     Beneficios
@@ -112,11 +112,11 @@ const Navbar: React.FC<NavbarProps> = ({
                 {currentView === 'home' ? (
                   <>
                     <a
-                      href="#como-funciona"
+                      href="#para-quien"
                       className="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
                       onClick={() => setIsOpen(false)}
                     >
-                      ¿Cómo funciona?
+                      ¿Para quíen es?
                     </a>
                     <a
                       href="#beneficios"

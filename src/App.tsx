@@ -51,7 +51,6 @@ function App() {
         <>
           {/* Se pasa la función a HeroSection */}
           <HeroSection onOpenLogin={handleOpenLogin} onShowProducts={handleShowProducts} />
-
           <ForWhoSection />
           <BenefitsSection />
           <TestimonialsSection />
