@@ -70,7 +70,25 @@ const CartView: React.FC<CartViewProps> = ({ onBack, onCheckout }) => {
     <div className="min-h-screen bg-gray-50 pt-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="mb-8">
+          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 text-center mb-4">
+            Mi Carrito de Compras
+          </h1>
+          <div className="flex items-center justify-between">
+            <button
+              onClick={onBack}
+              className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors duration-200"
+            >
+              <ArrowLeft className="h-5 w-5" />
+              <span>Volver al catálogo</span>
+            </button>
+            
+            <div className="flex items-center space-x-2 text-gray-600">
+              <Package className="h-5 w-5" />
+              <span>{totalItems} {totalItems === 1 ? 'producto' : 'productos'}</span>
+            </div>
+          </div>
+        </div>
           <button
             onClick={onBack}
             className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors duration-200"

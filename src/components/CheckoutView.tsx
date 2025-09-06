@@ -248,7 +248,21 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
     <div className="min-h-screen bg-gray-50 pt-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="mb-8">
+          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 text-center mb-4">
+            Finalizar Compra
+          </h1>
+          <div className="flex items-center justify-between">
+            <button
+              onClick={onBack}
+              className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors duration-200"
+            >
+              <ArrowLeft className="h-5 w-5" />
+              <span>Volver al carrito</span>
+            </button>
+            <div className="w-24"></div> {/* Spacer for centering */}
+          </div>
+        </div>
           <button
             onClick={onBack}
             className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors duration-200"
@@ -429,8 +443,71 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
                   <input
                     type="radio"
                     name="paymentMethod"
+                    value="nequi"
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                  />
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl">📱</span>
+                    <div>
+                      <div className="font-medium text-gray-900">Nequi</div>
+                      <div className="text-sm text-gray-500">Pago rápido con tu celular</div>
+                    </div>
+                  </div>
+                </label>
+                
+                <label className="flex items-center space-x-3 cursor-pointer p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="credit_card"
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                  />
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl">💳</span>
+                    <div>
+                      <div className="font-medium text-gray-900">Tarjeta de Crédito</div>
+                      <div className="text-sm text-gray-500">Visa, Mastercard, American Express</div>
+                    </div>
+                  </div>
+                </label>
+                
+                <label className="flex items-center space-x-3 cursor-pointer p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="debit_card"
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                  />
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl">💳</span>
+                    <div>
+                      <div className="font-medium text-gray-900">Tarjeta Débito</div>
+                      <div className="text-sm text-gray-500">Débito Visa, Mastercard</div>
+                    </div>
+                  </div>
+                </label>
+                
+                <label className="flex items-center space-x-3 cursor-pointer p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="pse"
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                  />
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl">🏦</span>
+                    <div>
+                      <div className="font-medium text-gray-900">PSE</div>
+                      <div className="text-sm text-gray-500">Transferencia bancaria</div>
+                    </div>
+                  </div>
+                </label>
+                
+                <label className="flex items-center space-x-3 cursor-pointer p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
                     value="cash"
-                    defaultChecked
                     className="w-4 h-4 text-blue-600 focus:ring-blue-500"
                   />
                   <div className="flex items-center space-x-3">
@@ -441,6 +518,13 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
                     </div>
                   </div>
                 </label>
+              </div>
+              
+              <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+                <p className="text-sm text-blue-700 flex items-center space-x-2">
+                  <span className="text-lg">🔒</span>
+                  <span>Pagos seguros procesados por ePayco</span>
+                </p>
               </div>
             </div>
           </div>
