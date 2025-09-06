@@ -10,13 +10,21 @@ import LoginView from './components/LoginView';
 import ProductsView from './components/ProductsView';
 import ProductDetailView from './components/ProductDetailView';
 import CartView from './components/CartView';
+import CheckoutView from './components/CheckoutView';
 import { useCartStore } from './store/cartStore';
 
 function App() {
   // Estado centralizado para el modal de login
   const [showLogin, setShowLogin] = useState(false);
-  const [currentView, setCurrentView] = useState<'home' | 'products' | 'product-detail' | 'cart'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'products' | 'product-detail' | 'cart' | 'checkout'>('home');
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Mock authentication state
+  const [userProfile, setUserProfile] = useState({
+    fullName: 'Juan Pérez',
+    email: 'juan@email.com',
+    phone: '3001234567',
+    address: 'Calle 45 #23-67, Apartamento 301'
+  });
   
   const totalItems = useCartStore((state) => state.getTotalItems());
 
@@ -30,10 +38,7 @@ function App() {
     setCurrentView('product-detail');
   };
   const handleShowCart = () => setCurrentView('cart');
-  const handleCheckout = () => {
-    // Here you would implement checkout logic
-    console.log('Proceeding to checkout...');
-  };
+  const handleCheckout = () => setCurrentView('checkout');
 
   return (
     <div className="min-h-screen">
@@ -74,11 +79,26 @@ function App() {
               onCheckout={handleCheckout}
             />
           )}
+          {currentView === 'checkout' && (
+            <CheckoutView 
+              onBack={() => setCurrentView('cart')}
+              onOpenLogin={handleOpenLogin}
+              isAuthenticated={isAuthenticated}
+              userProfile={userProfile}
+            />
+          )}
         </>
       )}
 
       {/* El login modal se controla desde aquí */}
-      <LoginView isOpen={showLogin} onClose={handleCloseLogin} />
+      <LoginView 
+        isOpen={showLogin} 
+        onClose={handleCloseLogin}
+        onLoginSuccess={() => {
+          setIsAuthenticated(true);
+          handleCloseLogin();
+        }}
+      />
     </div>
   );
 }

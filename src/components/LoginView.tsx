@@ -4,6 +4,7 @@ import { X, ArrowLeft, Phone, Mail, Lock, User, Check, AlertCircle } from 'lucid
 interface LoginViewProps {
   isOpen: boolean;
   onClose: () => void;
+  onLoginSuccess?: () => void;
 }
 
 interface FormData {
@@ -24,7 +25,7 @@ interface ValidationErrors {
 type LoginView = 'phone' | 'otp' | 'recovery';
 type Tab = 'login' | 'register';
 
-const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
+const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose, onLoginSuccess }) => {
   const [activeTab, setActiveTab] = useState<Tab>('login');
   const [currentView, setCurrentView] = useState<LoginView>('phone');
   const [formData, setFormData] = useState<FormData>({
@@ -142,6 +143,9 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
     if (otpCode.length === 6) {
       // Simulate login success
       console.log('Login successful');
+      if (onLoginSuccess) {
+        onLoginSuccess();
+      }
       onClose();
     }
   };
@@ -167,6 +171,9 @@ const LoginView: React.FC<LoginViewProps> = ({ isOpen, onClose }) => {
     if (Object.keys(errors).length === 0) {
       // Simulate registration success
       console.log('Registration successful', formData);
+      if (onLoginSuccess) {
+        onLoginSuccess();
+      }
       onClose();
     }
   };
