@@ -614,6 +614,7 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
           </div>
         </div>
       </div>
+    </div>
   );
 };
 
