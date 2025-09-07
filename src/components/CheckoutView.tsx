@@ -29,6 +29,7 @@ interface ValidationErrors {
   email?: string;
   address?: string;
   neighborhood?: string;
+  paymentMethod?: string;
 }
 
 const CheckoutView: React.FC<CheckoutViewProps> = ({ 
@@ -54,6 +55,7 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
     instructions: ''
   });
 
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>('');
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderCompleted, setOrderCompleted] = useState(false);
@@ -176,6 +178,9 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
     }
     if (!validateNeighborhood(deliveryInfo.neighborhood)) {
       errors.neighborhood = 'El barrio es requerido (mínimo 3 caracteres)';
+    }
+    if (!selectedPaymentMethod) {
+      errors.paymentMethod = 'Debes seleccionar un método de pago';
     }
 
     setValidationErrors(errors);
@@ -429,6 +434,11 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
                     type="radio"
                     name="paymentMethod"
                     value="nequi"
+                    checked={selectedPaymentMethod === 'nequi'}
+                    onChange={(e) => {
+                      setSelectedPaymentMethod(e.target.value);
+                      setValidationErrors(prev => ({ ...prev, paymentMethod: undefined }));
+                    }}
                     className="w-4 h-4 text-blue-600 focus:ring-blue-500"
                   />
                   <div className="flex items-center space-x-3">
@@ -445,6 +455,11 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
                     type="radio"
                     name="paymentMethod"
                     value="credit_card"
+                    checked={selectedPaymentMethod === 'credit_card'}
+                    onChange={(e) => {
+                      setSelectedPaymentMethod(e.target.value);
+                      setValidationErrors(prev => ({ ...prev, paymentMethod: undefined }));
+                    }}
                     className="w-4 h-4 text-blue-600 focus:ring-blue-500"
                   />
                   <div className="flex items-center space-x-3">
@@ -461,6 +476,11 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
                     type="radio"
                     name="paymentMethod"
                     value="debit_card"
+                    checked={selectedPaymentMethod === 'debit_card'}
+                    onChange={(e) => {
+                      setSelectedPaymentMethod(e.target.value);
+                      setValidationErrors(prev => ({ ...prev, paymentMethod: undefined }));
+                    }}
                     className="w-4 h-4 text-blue-600 focus:ring-blue-500"
                   />
                   <div className="flex items-center space-x-3">
@@ -477,6 +497,11 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
                     type="radio"
                     name="paymentMethod"
                     value="pse"
+                    checked={selectedPaymentMethod === 'pse'}
+                    onChange={(e) => {
+                      setSelectedPaymentMethod(e.target.value);
+                      setValidationErrors(prev => ({ ...prev, paymentMethod: undefined }));
+                    }}
                     className="w-4 h-4 text-blue-600 focus:ring-blue-500"
                   />
                   <div className="flex items-center space-x-3">
@@ -493,6 +518,11 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
                     type="radio"
                     name="paymentMethod"
                     value="cash"
+                    checked={selectedPaymentMethod === 'cash'}
+                    onChange={(e) => {
+                      setSelectedPaymentMethod(e.target.value);
+                      setValidationErrors(prev => ({ ...prev, paymentMethod: undefined }));
+                    }}
                     className="w-4 h-4 text-blue-600 focus:ring-blue-500"
                   />
                   <div className="flex items-center space-x-3">
@@ -504,6 +534,13 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
                   </div>
                 </label>
               </div>
+              
+              {validationErrors.paymentMethod && (
+                <p className="mt-3 text-sm text-red-600 flex items-center space-x-1">
+                  <AlertCircle className="h-4 w-4" />
+                  <span>{validationErrors.paymentMethod}</span>
+                </p>
+              )}
               
               <div className="mt-4 p-3 bg-blue-50 rounded-lg">
                 <p className="text-sm text-blue-700 flex items-center space-x-2">
