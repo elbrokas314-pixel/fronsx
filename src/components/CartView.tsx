@@ -87,6 +87,9 @@ const CartView: React.FC<CartViewProps> = ({ onBack, onCheckout }) => {
               <Package className="h-5 w-5" />
               <span>{totalItems} {totalItems === 1 ? 'producto' : 'productos'}</span>
             </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart items */}
           <div className="lg:col-span-2 space-y-4">
