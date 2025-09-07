@@ -87,26 +87,6 @@ const CartView: React.FC<CartViewProps> = ({ onBack, onCheckout }) => {
               <Package className="h-5 w-5" />
               <span>{totalItems} {totalItems === 1 ? 'producto' : 'productos'}</span>
             </div>
-          </div>
-        </div>
-          <button
-            onClick={onBack}
-            className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors duration-200"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span>Volver al catálogo</span>
-          </button>
-          
-          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
-            Mi Carrito de Compras
-          </h1>
-          
-          <div className="flex items-center space-x-2 text-gray-600">
-            <Package className="h-5 w-5" />
-            <span>{totalItems} {totalItems === 1 ? 'producto' : 'productos'}</span>
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart items */}
           <div className="lg:col-span-2 space-y-4">

@@ -262,22 +262,6 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
             </button>
             <div className="w-24"></div> {/* Spacer for centering */}
           </div>
-        </div>
-          <button
-            onClick={onBack}
-            className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors duration-200"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span>Volver al carrito</span>
-          </button>
-          
-          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
-            Finalizar Compra
-          </h1>
-          
-          <div className="w-24"></div> {/* Spacer for centering */}
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Delivery Information Form */}
           <div className="lg:col-span-2 space-y-6">
