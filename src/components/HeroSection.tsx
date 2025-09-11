@@ -11,17 +11,17 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onOpenLogin, onShowProducts }
     'https://ik.imagekit.io/deliveryapp/Static%20IMGs/generated-image%20(1).png?updatedAt=1757092925816&tr=e-upscale';
 
   return (
-    <section className="pt-16 bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <section className="pt-16 bg-gradient-to-br from-blue-50 via-white to-green-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <div className="text-center lg:text-left">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
               Tu ciudad, <span className="text-blue-600">a tu puerta</span>.{' '}
               <span className="text-green-600">Rápido</span> y{' '}
               <span className="text-orange-500">local</span>.
             </h1>
-            <p className="mt-6 text-xl text-gray-600 leading-relaxed">
+            <p className="mt-6 text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
               La plataforma que conecta a los mejores vendedores de tu barrio contigo.
             </p>
 
@@ -45,11 +45,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onOpenLogin, onShowProducts }
 
             {/* Trust Indicators */}
             <div className="mt-12 flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-8">
-              <div className="flex items-center space-x-2 text-gray-500">
+              <div className="flex items-center space-x-2 text-gray-500 dark:text-gray-400">
                 <span className="text-2xl font-bold text-blue-600">500+</span>
                 <span>Vendedores activos</span>
               </div>
-              <div className="flex items-center space-x-2 text-gray-500">
+              <div className="flex items-center space-x-2 text-gray-500 dark:text-gray-400">
                 <span className="text-2xl font-bold text-green-600">10K+</span>
                 <span>Entregas realizadas</span>
               </div>
@@ -58,7 +58,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onOpenLogin, onShowProducts }
 
           {/* Visual */}
           <div className="relative">
-            <div className="rounded-2xl h-96 lg:h-[500px] overflow-hidden border-2 border-blue-200">
+            <div className="rounded-2xl h-96 lg:h-[500px] overflow-hidden border-2 border-blue-200 dark:border-gray-700">
               <img
                 src={heroImg}
                 alt="Delivery app hero"

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, X, Package, ShoppingCart } from 'lucide-react';
+import DarkModeToggle from './DarkModeToggle';
 
 interface NavbarProps {
   onOpenLogin: () => void;
@@ -22,7 +23,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <nav className="bg-white shadow-md fixed w-full z-50 top-0">
+      <nav className="bg-white dark:bg-gray-900 shadow-md fixed w-full z-50 top-0 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
@@ -31,7 +32,7 @@ const Navbar: React.FC<NavbarProps> = ({
               className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-200"
             >
               <Package className="h-8 w-8 text-blue-600" />
-              <span className="text-xl font-bold text-gray-900">DeliveryApp</span>
+              <span className="text-xl font-bold text-gray-900 dark:text-white">DeliveryApp</span>
             </button>
 
             {/* Desktop Navigation */}
@@ -51,7 +52,7 @@ const Navbar: React.FC<NavbarProps> = ({
               ) : (
                 <button
                   onClick={onShowHome}
-                  className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                  className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
                 >
                   ← Volver al inicio
                 </button>
@@ -60,12 +61,13 @@ const Navbar: React.FC<NavbarProps> = ({
 
             {/* Desktop Action Buttons */}
             <div className="hidden md:flex items-center space-x-4">
+              <DarkModeToggle />
               <button 
                 onClick={onShowCart}
                 className={`relative px-4 py-2 border rounded-lg transition-colors duration-200 flex items-center space-x-2 ${
                   currentView === 'cart'
                     ? 'bg-blue-50 text-blue-600 border-blue-300'
-                    : 'text-gray-600 border-gray-300 hover:bg-gray-50'
+                    : 'text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800'
                 }`}
               >
                 <ShoppingCart className="h-4 w-4" />
@@ -81,7 +83,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 className={`px-4 py-2 border rounded-lg transition-colors duration-200 ${
                   currentView === 'products'
                     ? 'bg-blue-50 text-blue-600 border-blue-300'
-                    : 'text-gray-600 border-gray-300 hover:bg-gray-50'
+                    : 'text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800'
                 }`}
               >
                 Explorar Productos
@@ -98,7 +100,7 @@ const Navbar: React.FC<NavbarProps> = ({
             <div className="md:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-100 transition-colors duration-200"
+                className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               >
                 {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
@@ -108,26 +110,26 @@ const Navbar: React.FC<NavbarProps> = ({
           {/* Mobile menu */}
           {isOpen && (
             <div className="md:hidden">
-              <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
+              <div className="px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
                 {currentView === 'home' ? (
                   <>
                     <a
                       href="#para-quien"
-                      className="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                      className="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors duration-200"
                       onClick={() => setIsOpen(false)}
                     >
                       ¿Para quíen es?
                     </a>
                     <a
                       href="#beneficios"
-                      className="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                      className="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors duration-200"
                       onClick={() => setIsOpen(false)}
                     >
                       Beneficios
                     </a>
                     <a
                       href="#testimonios"
-                      className="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                      className="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors duration-200"
                       onClick={() => setIsOpen(false)}
                     >
                       Testimonios
@@ -139,12 +141,15 @@ const Navbar: React.FC<NavbarProps> = ({
                       onShowHome();
                       setIsOpen(false);
                     }}
-                    className="block w-full text-left px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                    className="block w-full text-left px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors duration-200"
                   >
                     ← Volver al inicio
                   </button>
                 )}
                 <div className="pt-4 space-y-2">
+                  <div className="px-3 py-2">
+                    <DarkModeToggle />
+                  </div>
                   <button 
                     onClick={() => {
                       onShowCart();
@@ -153,7 +158,7 @@ const Navbar: React.FC<NavbarProps> = ({
                     className={`relative w-full px-4 py-2 border rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 ${
                       currentView === 'cart'
                         ? 'bg-blue-50 text-blue-600 border-blue-300'
-                        : 'text-gray-600 border-gray-300 hover:bg-gray-50'
+                        : 'text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800'
                     }`}
                   >
                     <ShoppingCart className="h-4 w-4" />
@@ -172,7 +177,7 @@ const Navbar: React.FC<NavbarProps> = ({
                     className={`w-full px-4 py-2 border rounded-lg transition-colors duration-200 ${
                       currentView === 'products'
                         ? 'bg-blue-50 text-blue-600 border-blue-300'
-                        : 'text-gray-600 border-gray-300 hover:bg-gray-50'
+                        : 'text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800'
                     }`}
                   >
                     Explorar Productos
