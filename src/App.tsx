@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
+import MobileBottomNav from './components/MobileBottomNav';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
+import OfflineIndicator from './components/OfflineIndicator';
 import HeroSection from './components/HeroSection';
 import ForWhoSection from './components/ForWhoSection';
 import BenefitsSection from './components/BenefitsSection';
@@ -41,7 +44,7 @@ function App() {
   const handleCheckout = () => setCurrentView('checkout');
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pb-safe">
       {/* Se pasa la función al Navbar */}
       <Navbar 
         onOpenLogin={handleOpenLogin} 
@@ -51,6 +54,22 @@ function App() {
         currentView={currentView}
         cartItemsCount={totalItems}
       />
+      
+      {/* Navegación móvil inferior */}
+      <MobileBottomNav
+        currentView={currentView}
+        cartItemsCount={totalItems}
+        onShowHome={handleShowHome}
+        onShowProducts={handleShowProducts}
+        onShowCart={handleShowCart}
+        onOpenLogin={handleOpenLogin}
+      />
+      
+      {/* PWA Install Prompt */}
+      <PWAInstallPrompt />
+      
+      {/* Offline Indicator */}
+      <OfflineIndicator />
       
       {currentView === 'home' ? (
         <>

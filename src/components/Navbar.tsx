@@ -22,7 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <nav className="bg-white shadow-md fixed w-full z-50 top-0">
+      <nav className="bg-white shadow-md fixed w-full z-50 top-0 pt-safe">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
@@ -59,7 +59,7 @@ const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             {/* Desktop Action Buttons */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden lg:flex items-center space-x-4">
               <button 
                 onClick={onShowCart}
                 className={`relative px-4 py-2 border rounded-lg transition-colors duration-200 flex items-center space-x-2 ${
@@ -95,7 +95,7 @@ const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             {/* Mobile menu button */}
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-100 transition-colors duration-200"
@@ -107,7 +107,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
           {/* Mobile menu */}
           {isOpen && (
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
                 {currentView === 'home' ? (
                   <>
@@ -145,16 +145,11 @@ const Navbar: React.FC<NavbarProps> = ({
                   </button>
                 )}
                 <div className="pt-4 space-y-2">
-                  <button 
+                  <button className="hidden md:block w-full px-4 py-2 border rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 text-gray-600 border-gray-300 hover:bg-gray-50"
                     onClick={() => {
                       onShowCart();
                       setIsOpen(false);
                     }}
-                    className={`relative w-full px-4 py-2 border rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 ${
-                      currentView === 'cart'
-                        ? 'bg-blue-50 text-blue-600 border-blue-300'
-                        : 'text-gray-600 border-gray-300 hover:bg-gray-50'
-                    }`}
                   >
                     <ShoppingCart className="h-4 w-4" />
                     <span>Carrito</span>
@@ -164,16 +159,11 @@ const Navbar: React.FC<NavbarProps> = ({
                       </span>
                     )}
                   </button>
-                  <button 
+                  <button className="hidden md:block w-full px-4 py-2 border rounded-lg transition-colors duration-200 text-gray-600 border-gray-300 hover:bg-gray-50"
                     onClick={() => {
                       onShowProducts();
                       setIsOpen(false);
                     }}
-                    className={`w-full px-4 py-2 border rounded-lg transition-colors duration-200 ${
-                      currentView === 'products'
-                        ? 'bg-blue-50 text-blue-600 border-blue-300'
-                        : 'text-gray-600 border-gray-300 hover:bg-gray-50'
-                    }`}
                   >
                     Explorar Productos
                   </button>
