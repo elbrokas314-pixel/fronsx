@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+
+import React, { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, Plus, Minus, ShoppingCart, Star, Store, Loader2, AlertCircle, Check } from 'lucide-react';
-import { Product } from '../types/Product';
-import { useCartStore } from '../store/cartStore';
+import { Product } from '@/lib/types/Product';
+import { useCartStore } from '@/lib/store/cartStore';
 
 interface ProductDetailViewProps {
   productId: string;
-  onBack: () => void;
 }
 
-const ProductDetailView: React.FC<ProductDetailViewProps> = ({ productId, onBack }) => {
+const ProductDetailView: React.FC<ProductDetailViewProps> = ({ productId }) => {
+  const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -17,6 +20,10 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ productId, onBack
   const [showAddedMessage, setShowAddedMessage] = useState(false);
 
   const addProduct = useCartStore((state) => state.addProduct);
+
+  const handleBack = useCallback(() => {
+    router.push('/products');
+  }, [router]);
 
   // Mock data for demonstration
   const mockProducts: Record<string, Product> = {
@@ -59,7 +66,7 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ productId, onBack
       calificacion: 4.8,
       descripcion: 'Trio de empanadas crujientes rellenas de pollo desmechado sazonado con especias tradicionales. Masa dorada y crujiente que encierra un relleno jugoso y lleno de sabor. Acompañadas con ají casero. Perfectas para compartir o disfrutar como comida completa.'
     },
-    '4':{
+    '4': {
       id: '4',
       nombre: 'Café Colombiano Premium',
       precio: 12000,
@@ -72,7 +79,7 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ productId, onBack
       calificacion: 4.6,
       descripcion: 'Café 100% colombiano, tostado artesanalmente'
     },
-    '5':{
+    '5': {
       id: '5',
       nombre: 'Patacón con Hogao',
       precio: 6500,
@@ -85,7 +92,7 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ productId, onBack
       calificacion: 4.4,
       descripcion: 'Patacón crujiente con hogao tradicional'
     },
-    '6':{
+    '6': {
       id: '6',
       nombre: 'Raspao de Tamarindo',
       precio: 2500,
@@ -98,7 +105,7 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ productId, onBack
       calificacion: 4.9,
       descripcion: 'Raspao artesanal con jarabe de tamarindo'
     },
-    '7':{
+    '7': {
       id: '7',
       nombre: 'Sancocho de Gallina',
       precio: 15000,
@@ -111,7 +118,7 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ productId, onBack
       calificacion: 4.8,
       descripcion: 'Sancocho tradicional con gallina criolla'
     },
-    '8':{
+    '8': {
       id: '8',
       nombre: 'Limonada de Coco',
       precio: 4000,
@@ -124,8 +131,6 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ productId, onBack
       calificacion: 4.5,
       descripcion: 'Limonada refrescante con coco rallado'
     }
-    
-    
   };
 
   // Simulate API call
@@ -176,13 +181,13 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ productId, onBack
     ));
   };
 
-  const handleQuantityChange = (newQuantity: number) => {
+  const handleQuantityChange = useCallback((newQuantity: number) => {
     if (newQuantity >= 1 && newQuantity <= 99) {
       setQuantity(newQuantity);
     }
-  };
+  }, []);
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = useCallback(async () => {
     if (!product) return;
     
     setIsAddingToCart(true);
@@ -196,7 +201,7 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ productId, onBack
     
     // Hide success message after 3 seconds
     setTimeout(() => setShowAddedMessage(false), 3000);
-  };
+  }, [product, quantity, addProduct]);
 
   // Loading state
   if (isLoading) {
@@ -220,7 +225,7 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ productId, onBack
       <div className="min-h-screen bg-gray-50 pt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <button
-            onClick={onBack}
+            onClick={handleBack}
             className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors duration-200 mb-8"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -252,7 +257,7 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ productId, onBack
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Back button */}
         <button
-          onClick={onBack}
+          onClick={handleBack}
           className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors duration-200 mb-8"
         >
           <ArrowLeft className="h-5 w-5" />

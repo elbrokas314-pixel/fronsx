@@ -1,13 +1,12 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Search, Filter, Loader2, Package, AlertCircle } from 'lucide-react';
 import ProductCard from './ProductCard';
-import { Product, Category } from '../types/Product';
+import { Product, Category } from '@/lib/types/Product';
 
-interface ProductsViewProps {
-  onProductClick: (productId: string) => void;
-}
-
-const ProductsView: React.FC<ProductsViewProps> = ({ onProductClick }) => {
+const ProductsView: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -142,11 +141,6 @@ const ProductsView: React.FC<ProductsViewProps> = ({ onProductClick }) => {
       try {
         // Simulate API delay
         await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        // Simulate potential API error (uncomment to test error state)
-        // if (Math.random() > 0.8) {
-        //   throw new Error('Error al cargar productos');
-        // }
         
         setProducts(mockProducts);
         setCategories(mockCategories);
@@ -340,11 +334,9 @@ const ProductsView: React.FC<ProductsViewProps> = ({ onProductClick }) => {
             ) : (
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {filteredProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    onClick={(product) => onProductClick(product.id)}
-                  />
+                  <Link key={product.id} href={`/products/${product.id}`}>
+                    <ProductCard product={product} />
+                  </Link>
                 ))}
               </div>
             )}

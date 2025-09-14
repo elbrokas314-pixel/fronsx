@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
+'use client';
+
+import React, { useState, useCallback } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X, Package, ShoppingCart } from 'lucide-react';
+import { useCartStore } from '@/lib/store/cartStore';
+import LoginView from './LoginView';
 
-interface NavbarProps {
-  onOpenLogin: () => void;
-  onShowProducts: () => void;
-  onShowHome: () => void;
-  onShowCart: () => void;
-  currentView: 'home' | 'products' | 'product-detail' | 'cart';
-  cartItemsCount: number;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ 
-  onOpenLogin, 
-  onShowProducts, 
-  onShowHome, 
-  onShowCart,
-  currentView,
-  cartItemsCount 
-}) => {
+const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const pathname = usePathname();
+  
+  const totalItems = useCartStore((state) => state.getTotalItems());
+
+  const handleOpenLogin = useCallback(() => setShowLogin(true), []);
+  const handleCloseLogin = useCallback(() => setShowLogin(false), []);
+  const handleLoginSuccess = useCallback(() => {
+    setShowLogin(false);
+  }, []);
+
+  const isActive = (path: string) => pathname === path;
 
   return (
     <>
@@ -26,17 +28,17 @@ const Navbar: React.FC<NavbarProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <button 
-              onClick={onShowHome}
+            <Link 
+              href="/"
               className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-200"
             >
               <Package className="h-8 w-8 text-blue-600" />
               <span className="text-xl font-bold text-gray-900">DeliveryApp</span>
-            </button>
+            </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              {currentView === 'home' ? (
+              {pathname === '/' ? (
                 <>
                   <a href="#para-quien" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">
                     ¿Para quíen es?
@@ -49,45 +51,45 @@ const Navbar: React.FC<NavbarProps> = ({
                   </a>
                 </>
               ) : (
-                <button
-                  onClick={onShowHome}
+                <Link
+                  href="/"
                   className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
                 >
                   ← Volver al inicio
-                </button>
+                </Link>
               )}
             </div>
 
             {/* Desktop Action Buttons */}
             <div className="hidden lg:flex items-center space-x-4">
-              <button 
-                onClick={onShowCart}
+              <Link 
+                href="/cart"
                 className={`relative px-4 py-2 border rounded-lg transition-colors duration-200 flex items-center space-x-2 ${
-                  currentView === 'cart'
+                  isActive('/cart')
                     ? 'bg-blue-50 text-blue-600 border-blue-300'
                     : 'text-gray-600 border-gray-300 hover:bg-gray-50'
                 }`}
               >
                 <ShoppingCart className="h-4 w-4" />
                 <span>Carrito</span>
-                {cartItemsCount > 0 && (
+                {totalItems > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    {cartItemsCount > 99 ? '99+' : cartItemsCount}
+                    {totalItems > 99 ? '99+' : totalItems}
                   </span>
                 )}
-              </button>
-              <button 
-                onClick={onShowProducts}
+              </Link>
+              <Link 
+                href="/products"
                 className={`px-4 py-2 border rounded-lg transition-colors duration-200 ${
-                  currentView === 'products'
+                  isActive('/products') || pathname.startsWith('/products/')
                     ? 'bg-blue-50 text-blue-600 border-blue-300'
                     : 'text-gray-600 border-gray-300 hover:bg-gray-50'
                 }`}
               >
                 Explorar Productos
-              </button>
+              </Link>
               <button 
-                onClick={onOpenLogin}
+                onClick={handleOpenLogin}
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
               >
                 Ingresar / Registrarse
@@ -109,7 +111,7 @@ const Navbar: React.FC<NavbarProps> = ({
           {isOpen && (
             <div className="lg:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
-                {currentView === 'home' ? (
+                {pathname === '/' ? (
                   <>
                     <a
                       href="#para-quien"
@@ -134,42 +136,18 @@ const Navbar: React.FC<NavbarProps> = ({
                     </a>
                   </>
                 ) : (
-                  <button
-                    onClick={() => {
-                      onShowHome();
-                      setIsOpen(false);
-                    }}
+                  <Link
+                    href="/"
                     className="block w-full text-left px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                    onClick={() => setIsOpen(false)}
                   >
                     ← Volver al inicio
-                  </button>
+                  </Link>
                 )}
                 <div className="pt-4 space-y-2">
-                  <button className="hidden md:block w-full px-4 py-2 border rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 text-gray-600 border-gray-300 hover:bg-gray-50"
-                    onClick={() => {
-                      onShowCart();
-                      setIsOpen(false);
-                    }}
-                  >
-                    <ShoppingCart className="h-4 w-4" />
-                    <span>Carrito</span>
-                    {cartItemsCount > 0 && (
-                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                        {cartItemsCount > 99 ? '99+' : cartItemsCount}
-                      </span>
-                    )}
-                  </button>
-                  <button className="hidden md:block w-full px-4 py-2 border rounded-lg transition-colors duration-200 text-gray-600 border-gray-300 hover:bg-gray-50"
-                    onClick={() => {
-                      onShowProducts();
-                      setIsOpen(false);
-                    }}
-                  >
-                    Explorar Productos
-                  </button>
                   <button 
                     onClick={() => {
-                      onOpenLogin();
+                      handleOpenLogin();
                       setIsOpen(false);
                     }}
                     className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
@@ -182,6 +160,13 @@ const Navbar: React.FC<NavbarProps> = ({
           )}
         </div>
       </nav>
+
+      {/* Login Modal */}
+      <LoginView 
+        isOpen={showLogin} 
+        onClose={handleCloseLogin}
+        onLoginSuccess={handleLoginSuccess}
+      />
     </>
   );
 };

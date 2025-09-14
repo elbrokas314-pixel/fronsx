@@ -1,13 +1,13 @@
-import React from 'react';
+'use client';
+
+import React, { useCallback } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, Plus, Minus, Trash2, ShoppingCart, Package } from 'lucide-react';
-import { useCartStore } from '../store/cartStore';
+import { useCartStore } from '@/lib/store/cartStore';
 
-interface CartViewProps {
-  onBack: () => void;
-  onCheckout: () => void;
-}
-
-const CartView: React.FC<CartViewProps> = ({ onBack, onCheckout }) => {
+const CartView: React.FC = () => {
+  const router = useRouter();
   const {
     items,
     removeProduct,
@@ -18,6 +18,14 @@ const CartView: React.FC<CartViewProps> = ({ onBack, onCheckout }) => {
     getShippingCost,
     getTotal
   } = useCartStore();
+
+  const handleBack = useCallback(() => {
+    router.push('/products');
+  }, [router]);
+
+  const handleCheckout = useCallback(() => {
+    router.push('/checkout');
+  }, [router]);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-CO', {
@@ -39,7 +47,7 @@ const CartView: React.FC<CartViewProps> = ({ onBack, onCheckout }) => {
       <div className="min-h-screen bg-gray-50 pt-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <button
-            onClick={onBack}
+            onClick={handleBack}
             className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors duration-200 mb-8"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -54,12 +62,12 @@ const CartView: React.FC<CartViewProps> = ({ onBack, onCheckout }) => {
             <p className="text-gray-600 mb-8">
               Explora nuestros productos y añade algunos a tu carrito
             </p>
-            <button
-              onClick={onBack}
-              className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-semibold"
+            <Link
+              href="/products"
+              className="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-semibold"
             >
               Explorar Productos
-            </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -76,7 +84,7 @@ const CartView: React.FC<CartViewProps> = ({ onBack, onCheckout }) => {
           </h1>
           <div className="flex items-center justify-between">
             <button
-              onClick={onBack}
+              onClick={handleBack}
               className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors duration-200"
             >
               <ArrowLeft className="h-5 w-5" />
@@ -218,7 +226,7 @@ const CartView: React.FC<CartViewProps> = ({ onBack, onCheckout }) => {
               </div>
 
               <button
-                onClick={onCheckout}
+                onClick={handleCheckout}
                 className="w-full py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-semibold text-lg"
               >
                 Finalizar Compra

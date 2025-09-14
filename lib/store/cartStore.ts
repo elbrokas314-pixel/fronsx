@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Product } from '../types/Product';
+import { Product } from '@/lib/types/Product';
 
 export interface CartItem {
   product: Product;

@@ -1,13 +1,14 @@
+'use client';
+
 import React from 'react';
 import { Star, Store } from 'lucide-react';
-import { Product } from '../types/Product';
+import { Product } from '@/lib/types/Product';
 
 interface ProductCardProps {
   product: Product;
-  onClick: (product: Product) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-CO', {
       style: 'currency',
@@ -31,10 +32,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {
   };
 
   return (
-    <div
-      onClick={() => onClick(product)}
-      className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 cursor-pointer border border-gray-100 overflow-hidden group"
-    >
+    <div className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 cursor-pointer border border-gray-100 overflow-hidden group">
       {/* Product Image */}
       <div className="relative overflow-hidden">
         <img
