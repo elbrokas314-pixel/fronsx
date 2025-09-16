@@ -84,6 +84,18 @@
           "sizes": "96x96"
         }
       ]
+    },
+    {
+      "name": "Dashboard Vendedor",
+      "short_name": "Dashboard",
+      "description": "Panel de control para vendedores",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
     }
   ],
   "screenshots": [

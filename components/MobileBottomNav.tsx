@@ -3,13 +3,15 @@
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, ShoppingCart, User } from 'lucide-react';
+import { Home, ShoppingCart, User, BarChart3 } from 'lucide-react';
 import { useCartStore } from '@/lib/store/cartStore';
+import { useAuth } from '@/lib/hooks/useAuth';
 import LoginView from './LoginView';
 
 const MobileBottomNav: React.FC = () => {
   const [showLogin, setShowLogin] = useState(false);
   const pathname = usePathname();
+  const { user, isAuthenticated } = useAuth();
   const totalItems = useCartStore((state) => state.getTotalItems());
 
   const handleOpenLogin = useCallback(() => setShowLogin(true), []);
@@ -21,6 +23,9 @@ const MobileBottomNav: React.FC = () => {
   const isActive = (path: string) => {
     if (path === '/') {
       return pathname === '/' || pathname.startsWith('/products');
+    }
+    if (path === '/dashboard') {
+      return pathname.startsWith('/dashboard');
     }
     return pathname === path;
   };
@@ -38,7 +43,9 @@ const MobileBottomNav: React.FC = () => {
       
       {/* Barra de navegación inferior */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 md:hidden">
-        <div className="flex items-center justify-around h-16 px-4">
+        <div className={`flex items-center justify-around h-16 px-4 ${
+          isAuthenticated && user?.role === 'vendedor' ? 'grid grid-cols-4' : 'grid grid-cols-3'
+        }`}>
           {/* Home/Products */}
           <Link
             href="/products"
@@ -63,6 +70,17 @@ const MobileBottomNav: React.FC = () => {
             </div>
             <span className="text-xs font-medium">Carrito</span>
           </Link>
+
+          {/* Dashboard - Solo para vendedores */}
+          {isAuthenticated && user?.role === 'vendedor' && (
+            <Link
+              href="/dashboard"
+              className={`flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 min-w-[60px] ${getActiveClasses('/dashboard')}`}
+            >
+              <BarChart3 className="h-6 w-6 mb-1" />
+              <span className="text-xs font-medium">Dashboard</span>
+            </Link>
+          )}
 
           {/* Perfil */}
           <button
